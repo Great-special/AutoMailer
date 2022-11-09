@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block Content %}
+<head>
+	<meta charset="utf-8">
+	<title>{% block title %}
+		Mail Sender | AutomateMail
+	{% endblock title %}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+	
+
+
+	<body>
+		<!-- {% include "navBar.html" %} -->
+        {% load crispy_forms_tags %}
+
+		<div class="wrapper">
+			<div class="inner">
+				{% block messages %}
+					<ul class="messages" id="messages-list">
+					{% if messages %}
+						{% for message in messages %}
+						<li>
+							{% if message.tags %}
+								<div class="alert alert-{{ message.tags }} msg fade show" role="alert">{{ message }}</div>
+							{% else %}
+								<div class="alert alert-info msg fade show" role="alert">{{ message }}</div>
+							{% endif %}
+						</li>
+						{% endfor %}
+					{% endif %}
+					</ul>
+				{% endblock %}
+				<h3>Send A Mail</h3>
+				<p>You can either send the mail by scheduled todays to everyone or<br>
+					To a group of address</p>
+					
+				<form method="post">
+                    {% csrf_token %}
+					
+					{{ form.subject|as_crispy_field }}
+					{{ form.body|as_crispy_field }}
+					{{ form.receiver|as_crispy_field }}
+					{{ form.repeat|as_crispy_field }}
+					{% if form.repeat %}
+					{{ form.schedule|as_crispy_field }}
+					{% endif %}
+					
+					<button type="submit">Submit 
+						<i class="zmdi zmdi-arrow-right"></i>
+					</button>
+					
+				</form>
+			</div>
+		</div>
+		
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	</body>
+    
+{% endblock Content %}

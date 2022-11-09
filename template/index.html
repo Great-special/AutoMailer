@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Mail Sender | ExpressMail
+{% endblock title %}
+
+{% block Content %}
+
+	<head>
+		<meta charset="utf-8">
+		<title>Mail Sender</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="{% static 'css/style.css' %}">
+	</head>
+
+	<body>
+		<div class="wrapper">
+			{% block messages %}
+					<ul class="messages" id="messages-list">
+					{% if messages %}
+						{% for message in messages %}
+						<li>
+							{% if message.tags %}
+								<div class="alert alert-{{ message.tags }} msg fade show" role="alert">{{ message }}</div>
+							{% else %}
+								<div class="alert alert-info msg fade show" role="alert">{{ message }}</div>
+							{% endif %}
+						</li>
+						{% endfor %}
+					{% endif %}
+					</ul>
+				{% endblock %}
+			<div class="inner">
+				<form method="post">
+                    {% csrf_token %}
+					<h3>Send A Mail</h3>
+					<p>Be sure to enable two-factor auth in your email settings.<br>
+					If you don't have that enabled, you can sign up to use ours and send your mails</p>
+					<label class="form-group">
+						<input type="email" class="form-control" name="sender-email" >
+						<span>sender</span>
+						<span class="border"></span>
+					</label>
+
+					<label class="form-group">
+						<input type="text" class="form-control" name="subject"  required>
+						<span> subject</span>
+						<span class="border"></span>
+					</label>
+
+					<label class="form-group">
+						<input type="email" class="form-control" name="email"  required>
+						<span> recipient</span>
+						<span class="border"></span>
+					</label>
+					
+					<label class="form-group">
+						<input type="password" class="form-control" name="password"  required>
+						<span>Second Factor Password</span>
+						<span class="border"></span>
+					</label>
+
+					<label class="form-group" >
+						<textarea cols="30" rows="2" class="form-control" name="message" required></textarea>
+						<span for="">Your Message</span>
+						<span class="border"></span>
+					</label>
+					<button type="submit">Submit 
+						<i class="zmdi zmdi-arrow-right"></i>
+					</button>
+				</form>
+			</div>
+		</div>
+		
+	</body>
+
+{% endblock Content %}
