@@ -2,7 +2,6 @@
 <nav class="navbar fixed-top justify-content-between navbar-expand-lg navbar-dark bg-primary">
     <a class="navbar-brand" href="{% url 'create-mail' %}">Mail Sender</a>
     
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         {% if user.is_authenticated %}
         <li class="nav-item active"> 
@@ -42,8 +41,7 @@
         <a href="{% url 'login' %}" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">SignIn</a>
         {% endif %}  
       </span>
-      
-    </div>
+ 
 </nav>
 
 
